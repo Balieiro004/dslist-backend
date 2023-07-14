@@ -3,12 +3,10 @@ package com.balieiro.dslist.controller;
 import com.balieiro.dslist.dto.GameDTO;
 import com.balieiro.dslist.dto.GameListDTO;
 import com.balieiro.dslist.dto.GameMinDto;
+import com.balieiro.dslist.dto.ReplacementDTO;
 import com.balieiro.dslist.services.GameListService;
 import com.balieiro.dslist.services.GameService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +29,9 @@ public class GameListController {
     public List<GameMinDto> findByList(@PathVariable(value = "listId") Long listId){
         List<GameMinDto> result = gameService.findByList(listId);
         return result;
+    }
+    @PostMapping(value = "/{listId}/replacement")
+    public void move(@PathVariable Long listId, @RequestBody ReplacementDTO body) {
+        gameListService.move(listId, body.getSourceIndex(), body.getDestinationIndex());
     }
 }
